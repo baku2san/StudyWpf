@@ -10,6 +10,8 @@ namespace StudyWpf.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+
+            SetSqlGenerator("System.Data.SQLite", new SQLiteMigrationSqlGenerator());
         }
 
         protected override void Seed(StudyWpf.Models.TestContext context)
