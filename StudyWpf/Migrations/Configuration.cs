@@ -3,15 +3,16 @@ namespace StudyWpf.Migrations
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.SQLite.EF6.Migrations;
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<StudyWpf.Models.TestContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-
-            SetSqlGenerator("System.Data.SQLite", new SQLiteMigrationSqlGenerator());
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+            SetSqlGenerator("System.Data.SQLite.EF6", new SQLiteMigrationSqlGenerator());
         }
 
         protected override void Seed(StudyWpf.Models.TestContext context)
