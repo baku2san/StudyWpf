@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StudyWpf.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace StudyWpf
         public MainWindow()
         {
             InitializeComponent();
+
+            var os = new TestContext();
+            Console.WriteLine(os.Items.Count());
         }
     }
 }

@@ -1,5 +1,6 @@
 namespace StudyWpf.Migrations
 {
+    using StudyWpf.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -21,14 +22,14 @@ namespace StudyWpf.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+
+            context.Items.AddOrUpdate(
+              p => p.Id,
+              new TestModel() {Id = 1, Name = "Andrew Peters" , SheetId = 2, ResultStatus = TestModel.ResultStatusDefinition.NotYet},
+              new TestModel() {Id = 2, Name = "Brice Lambson", SheetId = 2, ResultStatus = TestModel.ResultStatusDefinition.NotYet },
+              new TestModel() {Id = 3, Name = "Rowan Miller", SheetId = 2, ResultStatus = TestModel.ResultStatusDefinition.NotYet }
+            );
+            context.SaveChanges();
         }
     }
 }
