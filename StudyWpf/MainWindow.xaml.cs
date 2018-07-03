@@ -1,7 +1,10 @@
-﻿using StudyWpf.Models;
+﻿using AutoMapper;
+using StudyWpf.Models;
+using StudyWpf.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +26,12 @@ namespace StudyWpf
     {
         public MainWindow()
         {
+            Mapper.Initialize(cfg => { 
+                cfg.AddProfiles(Assembly.GetExecutingAssembly());
+                cfg.CreateMap<TestEntity, TestViewModel>();
+                cfg.CreateMap<Test2Entity, Test2ViewModel>();
+            });
+
             InitializeComponent();
 
             var os = new TestContext();
