@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Livet;
+using Reactive.Bindings;
 using StudyWpf.Models;
 using StudyWpf.ViewModels;
 using System;
@@ -27,15 +29,16 @@ namespace StudyWpf
         public MainWindow()
         {
             Mapper.Initialize(cfg => { 
-                cfg.AddProfiles(Assembly.GetExecutingAssembly());
-                cfg.CreateMap<TestEntity, TestViewModel>();
-                cfg.CreateMap<Test2Entity, Test2ViewModel>();
+                //cfg.AddProfiles(Assembly.GetExecutingAssembly());
+                cfg.CreateMap<TestEntity, TestViewModel>().ReverseMap();
+                cfg.CreateMap<Test2Entity, Test2ViewModel>().ReverseMap();
             });
+
+            DispatcherHelper.UIDispatcher = Dispatcher;
+            UIDispatcherScheduler.Initialize();
 
             InitializeComponent();
 
-            var os = new TestContext();
-            Console.WriteLine(os.Items.Count());
         }
     }
 }

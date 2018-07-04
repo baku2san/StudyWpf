@@ -1,8 +1,11 @@
-﻿using System;
+﻿using AutoMapper;
+using StudyWpf.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -13,5 +16,6 @@ namespace StudyWpf
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

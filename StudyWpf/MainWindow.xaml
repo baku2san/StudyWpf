@@ -1,12 +1,39 @@
 ﻿<Window x:Class="StudyWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StudyWpf"
+        xmlns:vm="clr-namespace:StudyWpf.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
+            <DataGrid AutoGenerateColumns="False"  IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest}" SelectionMode="Single" ItemBindingGroup="{Binding Tests}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest}" SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="True" Grid.Column="1" SelectedItem="{Binding SelectedTest2}" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

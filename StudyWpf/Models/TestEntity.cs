@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Livet;
 
 namespace StudyWpf.Models
 {
-    public class TestModel
+    public class TestEntity: NotificationObject
     {
         public enum ResultStatusDefinition {
             OK,

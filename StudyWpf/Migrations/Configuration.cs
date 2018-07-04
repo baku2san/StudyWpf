@@ -16,20 +16,27 @@ namespace StudyWpf.Migrations
             SetSqlGenerator("System.Data.SQLite.EF6", new SQLiteMigrationSqlGenerator());
         }
 
-        protected override void Seed(StudyWpf.Models.TestContext context)
+        protected override void Seed(StudyWpf.Models.TestContext testContext)
         {
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
+            base.Seed(testContext);
+            // ‚±‚±‚ÅAUpdate-Database‚É‚ÄASeed‚ªŽÀŽ{‚³‚ê‚éBApp_StartŽž‚Í“®‚©‚È‚¢
 
-            context.Items.AddOrUpdate(
-              p => p.Id,
-              new TestModel() {Id = 1, Name = "Andrew Peters" , SheetId = 2, ResultStatus = TestModel.ResultStatusDefinition.NotYet},
-              new TestModel() {Id = 2, Name = "Brice Lambson", SheetId = 2, ResultStatus = TestModel.ResultStatusDefinition.NotYet },
-              new TestModel() {Id = 3, Name = "Rowan Miller", SheetId = 2, ResultStatus = TestModel.ResultStatusDefinition.NotYet }
+            var data = Enumerable.Range(1, 1000).Select(s => new TestEntity() { Id = s, Name = "test" + s, SheetId = s ^ 2, ResultStatus = TestEntity.ResultStatusDefinition.NotYet });
+            var data2 = Enumerable.Range(1, 1000).Select(s => new Test2Entity() { Id = s, Name = "test" + s, TestModelId = s, ResultStatus = Test2Entity.Test2Status.NotYet });
+
+            testContext.Items.AddOrUpdate(
+                p => p.Id,
+                data.ToArray()
             );
-            context.SaveChanges();
+            testContext.Item2s.AddOrUpdate(
+                p => p.Id,
+                data2.ToArray()
+            );
+            testContext.SaveChanges();
         }
     }
 }
