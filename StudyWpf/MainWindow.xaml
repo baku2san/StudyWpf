@@ -16,20 +16,14 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
-            <DataGrid AutoGenerateColumns="False"  IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest}" SelectionMode="Single" ItemBindingGroup="{Binding Tests}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest}" SelectionMode="Single">
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest.Value}" SelectionMode="Single">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="True" Grid.Column="1" SelectedItem="{Binding SelectedTest2}" SelectionMode="Single">
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="True" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>

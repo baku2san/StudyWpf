@@ -14,7 +14,7 @@ namespace StudyWpf.Models
     {
         private TestRepository testRepository = new TestRepository();
 
-        public TestEntity _SelectedTest = new TestEntity();
+        public TestEntity _SelectedTest ;
         public TestEntity SelectedTest
         {
             get { return _SelectedTest; }
@@ -22,11 +22,12 @@ namespace StudyWpf.Models
             {
                 if (_SelectedTest == value) return;
                 _SelectedTest = value;
+                Test1Selected();
             }
         }
         public ObservableCollection<TestEntity> Tests;
 
-        public Test2Entity _SelectedTest2 = new Test2Entity();
+        public Test2Entity _SelectedTest2 ;
         public Test2Entity SelectedTest2
         {
             get { return _SelectedTest2; }
@@ -42,9 +43,17 @@ namespace StudyWpf.Models
         {
 
             Tests = new ObservableCollection<TestEntity>(testRepository.Tests());
-            Test2s = new ObservableCollection<Test2Entity>(testRepository.Test2s());
+            Test2s = new ObservableCollection<Test2Entity>();
 
-            
+        }
+        private void Test1Selected()
+        {
+            Test2s.Clear();
+            foreach ( var test2 in testRepository.Test2s(_SelectedTest))
+            {
+                Test2s.Add(test2);
+            }
+            _SelectedTest2 = null;
         }
     }
 }

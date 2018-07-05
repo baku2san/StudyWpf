@@ -25,7 +25,8 @@ namespace StudyWpf.ViewModels
 
             SelectedTest = ReactiveProperty.FromObject(model, x => x.SelectedTest, convert: x => Mapper.Map<TestViewModel>(x), convertBack: x => Mapper.Map<TestEntity>(x))
                 .AddTo(CompositeDisposable);
-            SelectedTest2 = new ReactiveProperty<Test2ViewModel>();
+            SelectedTest2 = ReactiveProperty.FromObject(model, x => x.SelectedTest2, convert: x => Mapper.Map<Test2ViewModel>(x), convertBack: x => Mapper.Map<Test2Entity>(x))
+                .AddTo(CompositeDisposable);
 
             Tests = model
                 .Tests

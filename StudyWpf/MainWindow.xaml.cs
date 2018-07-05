@@ -30,9 +30,18 @@ namespace StudyWpf
         {
             Mapper.Initialize(cfg => { 
                 //cfg.AddProfiles(Assembly.GetExecutingAssembly());
-                cfg.CreateMap<TestEntity, TestViewModel>().ReverseMap();
-                cfg.CreateMap<Test2Entity, Test2ViewModel>().ReverseMap();
+                cfg.CreateMap<TestEntity, TestViewModel>()
+                    .ForMember(dest=> dest.CompositeDisposable, opt=>opt.Ignore())
+                    .ForMember(dest=> dest.Messenger, opt=>opt.Ignore())
+                    .ReverseMap()
+                    .ForMember(dest=> dest.SheetId, opt=>opt.Ignore())
+                    ;
+                cfg.CreateMap<Test2Entity, Test2ViewModel>()
+                    .ForMember(dest => dest.CompositeDisposable, opt => opt.Ignore())
+                    .ForMember(dest => dest.Messenger, opt => opt.Ignore())
+                    .ReverseMap();
             });
+            Mapper.AssertConfigurationIsValid();
 
             DispatcherHelper.UIDispatcher = Dispatcher;
             UIDispatcherScheduler.Initialize();

@@ -1,5 +1,6 @@
 ﻿using Livet;
 using StudyWpf.Models;
+using static StudyWpf.Models.Constants;
 
 namespace StudyWpf.ViewModels
 {
@@ -8,6 +9,6 @@ namespace StudyWpf.ViewModels
         public int Id { get; set; }
         public int TestModelId { get; set; }
         public string Name { get; set; }
-        public Test2Entity.Test2Status ResultStatus { get; set; }
+        public ResultStatus ResultStatus { get; set; }
     }
 }

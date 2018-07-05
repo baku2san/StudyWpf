@@ -7,6 +7,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static StudyWpf.Models.Constants;
 
 namespace StudyWpf.Models
 {
@@ -63,9 +64,9 @@ namespace StudyWpf.Models
         {
             testContext.Items.AddOrUpdate(
                 p => p.Id,
-                new TestEntity() { Id = 1, Name = "Andrew Peters", SheetId = 3, ResultStatus = TestEntity.ResultStatusDefinition.NotYet },
-                new TestEntity() { Id = 2, Name = "Brice Lambson", SheetId = 2, ResultStatus = TestEntity.ResultStatusDefinition.NotYet },
-                new TestEntity() { Id = 3, Name = "Rowan Miller", SheetId = 2, ResultStatus = TestEntity.ResultStatusDefinition.NotYet }
+                new TestEntity() { Id = 1, Name = "Andrew Peters", SheetId = 3, ResultStatus = ResultStatus.NotYet },
+                new TestEntity() { Id = 2, Name = "Brice Lambson", SheetId = 2, ResultStatus = ResultStatus.NotYet },
+                new TestEntity() { Id = 3, Name = "Rowan Miller", SheetId = 2, ResultStatus = ResultStatus.NotYet }
             );
             testContext.SaveChanges();
 
@@ -88,9 +89,9 @@ namespace StudyWpf.Models
             {
                 testContext.Items.AddOrUpdate(
                   p => p.Id,
-                  new TestEntity() { Id = 1, Name = "Andrew Peters", SheetId = 2, ResultStatus = TestEntity.ResultStatusDefinition.NotYet },
-                  new TestEntity() { Id = 2, Name = "Brice Lambson", SheetId = 2, ResultStatus = TestEntity.ResultStatusDefinition.NotYet },
-                  new TestEntity() { Id = 3, Name = "Rowan Miller", SheetId = 2, ResultStatus = TestEntity.ResultStatusDefinition.NotYet }
+                  new TestEntity() { Id = 1, Name = "Andrew Peters", SheetId = 2, ResultStatus = ResultStatus.NotYet },
+                  new TestEntity() { Id = 2, Name = "Brice Lambson", SheetId = 2, ResultStatus = ResultStatus.NotYet },
+                  new TestEntity() { Id = 3, Name = "Rowan Miller", SheetId = 2, ResultStatus = ResultStatus.NotYet }
                 );
                 testContext.SaveChanges();
             }

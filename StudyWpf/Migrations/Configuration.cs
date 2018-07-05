@@ -1,4 +1,4 @@
-namespace StudyWpf.Migrations
+ï»¿namespace StudyWpf.Migrations
 {
     using StudyWpf.Models;
     using System;
@@ -6,6 +6,7 @@ namespace StudyWpf.Migrations
     using System.Data.Entity.Migrations;
     using System.Data.SQLite.EF6.Migrations;
     using System.Linq;
+    using static StudyWpf.Models.Constants;
 
     internal sealed class Configuration : DbMigrationsConfiguration<StudyWpf.Models.TestContext>
     {
@@ -23,10 +24,11 @@ namespace StudyWpf.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             base.Seed(testContext);
-            // ‚±‚±‚ÅAUpdate-Database‚É‚ÄASeed‚ªŽÀŽ{‚³‚ê‚éBApp_StartŽž‚Í“®‚©‚È‚¢
+            // ã“ã“ã§ã€Update-Databaseã«ã¦ã€SeedãŒå®Ÿæ–½ã•ã‚Œã‚‹ã€‚App_Startæ™‚ã¯å‹•ã‹ãªã„
 
-            var data = Enumerable.Range(1, 1000).Select(s => new TestEntity() { Id = s, Name = "test" + s, SheetId = s ^ 2, ResultStatus = TestEntity.ResultStatusDefinition.NotYet });
-            var data2 = Enumerable.Range(1, 1000).Select(s => new Test2Entity() { Id = s, Name = "test" + s, TestModelId = s, ResultStatus = Test2Entity.Test2Status.NotYet });
+            var random = new Random();
+            var data = Enumerable.Range(1, 100).Select(s => new TestEntity() { Id = s, Name = "test" + s, SheetId = s ^ 2, ResultStatus = (ResultStatus)random.Next(3)});
+            var data2 = Enumerable.Range(1, 1000).Select(s => new Test2Entity() { Id = s, Name = Enumerable.Range(1,5).Select(ss=>((char)random.Next(65, 90)).ToString()).Aggregate((f,se)=>f+se), TestModelId = random.Next(100)+1, ResultStatus = (ResultStatus)random.Next(3) });
 
             testContext.Items.AddOrUpdate(
                 p => p.Id,
