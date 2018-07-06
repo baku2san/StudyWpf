@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -22,7 +23,7 @@ namespace StudyWpf.Models
             {
                 if (_SelectedTest == value) return;
                 _SelectedTest = value;
-                Test1Selected();
+                RaisePropertyChanged(nameof(SelectedTest));
             }
         }
         public ObservableCollection<TestEntity> Tests;
@@ -45,11 +46,15 @@ namespace StudyWpf.Models
             Tests = new ObservableCollection<TestEntity>(testRepository.Tests());
             Test2s = new ObservableCollection<Test2Entity>();
 
+            PropertyChanged += Test1Selected;
+
         }
-        private void Test1Selected()
+
+        private void Test1Selected(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName != nameof(SelectedTest) || !(sender is LogicModel)) { return; }
             Test2s.Clear();
-            foreach ( var test2 in testRepository.Test2s(_SelectedTest))
+            foreach (var test2 in testRepository.Test2s(_SelectedTest))
             {
                 Test2s.Add(test2);
             }
