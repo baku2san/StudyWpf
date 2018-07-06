@@ -15,8 +15,12 @@ namespace StudyWpf.Models
         }
         public IEnumerable<Test2Entity> Test2s(TestEntity test)
         {
-            return testContext.Items.Where(w=>w.Id == test.Id)
-                .Join(testContext.Item2s, item1 => item1.Id, item2=>item2.TestModelId, (item1, item2)=>  item2 );
+            return testContext.Item2s.Where(w=> w.TestModelId == test.Id);
+        }
+
+        internal IEnumerable<Test3Entity> Test3s(Test2Entity selectedTest)
+        {
+            return testContext.Item3s.Where(w => w.Test2Id == selectedTest.Id);
         }
     }
 }

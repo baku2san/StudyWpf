@@ -37,13 +37,22 @@ namespace StudyWpf
                     .ForMember(dest=> dest.SheetId, opt=>opt.Ignore())
                     ;
                 cfg.CreateMap<Test2Entity, Test2ViewModel>()
-                    .ForPath(dest => dest.Name.Value, source => source.MapFrom(s=>s.Name))
-                    .ForPath(dest => dest.SendEnabled.Value, source => source.MapFrom(s=>s.SendEnabled))
+                    .ForPath(dest => dest.Name.Value, source => source.MapFrom(s => s.Name))
+                    .ForPath(dest => dest.SendEnabled.Value, source => source.MapFrom(s => s.SendEnabled))
                     .ForMember(dest => dest.CompositeDisposable, opt => opt.Ignore())
                     .ForMember(dest => dest.Messenger, opt => opt.Ignore())
                     .ReverseMap()
-                    .ForPath(dest => dest.Name, source => source.MapFrom(s=>s.Name.Value))
-                    .ForPath(dest => dest.SendEnabled, source => source.MapFrom(s=>s.SendEnabled.Value))
+                    .ForPath(dest => dest.Name, source => source.MapFrom(s => s.Name.Value))
+                    .ForPath(dest => dest.SendEnabled, source => source.MapFrom(s => s.SendEnabled.Value))
+                    ;
+                cfg.CreateMap<Test3Entity, Test3ViewModel>()
+                    .ForPath(dest => dest.Name.Value, source => source.MapFrom(s => s.Name))
+                    .ForPath(dest => dest.SendEnabled.Value, source => source.MapFrom(s => s.SendEnabled))
+                    .ForMember(dest => dest.CompositeDisposable, opt => opt.Ignore())
+                    .ForMember(dest => dest.Messenger, opt => opt.Ignore())
+                    .ReverseMap()
+                    .ForPath(dest => dest.Name, source => source.MapFrom(s => s.Name.Value))
+                    .ForPath(dest => dest.SendEnabled, source => source.MapFrom(s => s.SendEnabled.Value))
                     ;
             });
             Mapper.AssertConfigurationIsValid();

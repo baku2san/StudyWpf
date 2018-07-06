@@ -15,6 +15,7 @@ namespace StudyWpf.Models
     {
         public DbSet<TestEntity> Items { get; set; }
         public DbSet<Test2Entity> Item2s { get; set; }
+        public DbSet<Test3Entity> Item3s { get; set; }
 
         public TestContext() : base("name=Sqlite")
 

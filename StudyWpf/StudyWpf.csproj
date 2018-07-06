@@ -129,9 +129,11 @@
     </ApplicationDefinition>
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\LogicModel.cs" />
+    <Compile Include="Models\Test3Entity.cs" />
     <Compile Include="Models\TestRepository.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Test2ViewModel.cs" />
+    <Compile Include="ViewModels\Test3ViewModel.cs" />
     <Compile Include="ViewModels\TestViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

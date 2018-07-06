@@ -29,6 +29,7 @@
             var random = new Random();
             var data = Enumerable.Range(1, 100).Select(s => new TestEntity() { Id = s, Name = "test" + s, SheetId = s ^ 2, ResultStatus = (ResultStatus)random.Next(3)});
             var data2 = Enumerable.Range(1, 1000).Select(s => new Test2Entity() { Id = s, Name = Enumerable.Range(1,5).Select(ss=>((char)random.Next(65, 90)).ToString()).Aggregate((f,se)=>f+se), TestModelId = random.Next(100)+1, ResultStatus = (ResultStatus)random.Next(3), IsOk = true });
+            var data3 = Enumerable.Range(1, 1000).Select(s => new Test3Entity() { Id = s, Name = Enumerable.Range(1,5).Select(ss=>((char)random.Next(65, 90)).ToString()).Aggregate((f,se)=>f+se), Test2Id = random.Next(100)+1, ResultStatus = (ResultStatus)random.Next(3), IsOk = true });
 
             testContext.Items.AddOrUpdate(
                 p => p.Id,
@@ -37,6 +38,10 @@
             testContext.Item2s.AddOrUpdate(
                 p => p.Id,
                 data2.ToArray()
+            );
+            testContext.Item3s.AddOrUpdate(
+                p => p.Id,
+                data3.ToArray()
             );
             testContext.SaveChanges();
         }

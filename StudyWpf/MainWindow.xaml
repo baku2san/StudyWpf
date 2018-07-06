@@ -13,6 +13,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
@@ -24,11 +25,25 @@
             </DataGrid>
         </StackPanel>
         <StackPanel Grid.Column="1">
+            <TextBlock Text="{Binding Test2s.Count, Mode=OneWay}"></TextBlock>
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="False" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
                     <DataGridCheckBoxColumn Binding="{Binding IsOk, UpdateSourceTrigger=PropertyChanged}" Header="Checked" IsReadOnly="False"/>
+                    <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBox></TextBox>
+            <TextBlock></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Column="2">
+            <TextBlock Text="{Binding Test3s.Count, Mode=OneWay}"></TextBlock>
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test3s}" IsReadOnly="False" SelectedItem="{Binding SelectedTest3.Value}" SelectionMode="Single"  >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
+                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="Checked" IsReadOnly="False"/>
                     <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
                 </DataGrid.Columns>
             </DataGrid>

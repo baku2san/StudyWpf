@@ -15,10 +15,16 @@ namespace StudyWpf.ViewModels
         private LogicModel model = new LogicModel();
 
         public ReactiveProperty<TestViewModel> SelectedTest { get; set; }
-        public ReactiveProperty<Test2ViewModel> SelectedTest2 { get; set; }
-
         public ReadOnlyReactiveCollection<TestViewModel> Tests { get; set; }
+
+        public ReactiveProperty<Test2ViewModel> SelectedTest2 { get; set; }
         public ReadOnlyReactiveCollection<Test2ViewModel> Test2s { get; set; }
+
+        public ReactiveProperty<Test3ViewModel> SelectedTest3 { get; set; }
+        public ReadOnlyReactiveCollection<Test3ViewModel> Test3s { get; set; }
+
+        public ReactiveCommand TestCommand { get; }
+
         public MainWindowViewModel()
         {
             Console.WriteLine(nameof(MainWindowViewModel));
@@ -26,6 +32,9 @@ namespace StudyWpf.ViewModels
             SelectedTest = ReactiveProperty.FromObject(model, x => x.SelectedTest, convert: x => Mapper.Map<TestViewModel>(x), convertBack: x => Mapper.Map<TestEntity>(x))
                 .AddTo(CompositeDisposable);
             SelectedTest2 = ReactiveProperty.FromObject(model, x => x.SelectedTest2, convert: x => Mapper.Map<Test2ViewModel>(x), convertBack: x => Mapper.Map<Test2Entity>(x))
+                .AddTo(CompositeDisposable);
+
+            SelectedTest3 = ReactiveProperty.FromObject(model, x => x.SelectedTest3, convert: x => Mapper.Map<Test3ViewModel>(x), convertBack: x => Mapper.Map<Test3Entity>(x))
                 .AddTo(CompositeDisposable);
 
             Tests = model
@@ -37,6 +46,17 @@ namespace StudyWpf.ViewModels
                 .Test2s
                 .ToReadOnlyReactiveCollection(to => Mapper.Map<Test2ViewModel>(to))
                 .AddTo(CompositeDisposable);
+
+            Test3s = model
+                .Test3s
+                .ToReadOnlyReactiveCollection(to => new Test3ViewModel(to))
+                .AddTo(CompositeDisposable);
+
+            //this.TestCommand = this.ObserveProperty(o=>o.SelectedTest2.Value.Name)
+            //    .CombineLatest(x => x.All(y => !y))
+            //    .ToReactiveCommand();
+            //this.TestCommand.Subscribe(async _ => Console.WriteLine("OK"));
+
         }
     }
 }
