@@ -23,11 +23,17 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="True" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <StackPanel Grid.Column="1">
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="False" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
+                    <DataGridCheckBoxColumn Binding="{Binding IsOk, UpdateSourceTrigger=PropertyChanged}" Header="Checked" IsReadOnly="False"/>
+                    <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBox></TextBox>
+            <TextBlock></TextBlock>
+        </StackPanel>
     </Grid>
 </Window>

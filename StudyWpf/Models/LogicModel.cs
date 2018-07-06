@@ -36,6 +36,7 @@ namespace StudyWpf.Models
             {
                 if (_SelectedTest2 == value) return;
                 _SelectedTest2 = value;
+                RaisePropertyChanged(nameof(SelectedTest2));
             }
         }
         public ObservableCollection<Test2Entity> Test2s;
@@ -47,6 +48,7 @@ namespace StudyWpf.Models
             Test2s = new ObservableCollection<Test2Entity>();
 
             PropertyChanged += Test1Selected;
+            PropertyChanged += Test2Selected;
 
         }
 
@@ -59,6 +61,11 @@ namespace StudyWpf.Models
                 Test2s.Add(test2);
             }
             _SelectedTest2 = null;
+        }
+        private void Test2Selected(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(SelectedTest2) || !(sender is LogicModel)) { return; }
+            Console.WriteLine(SelectedTest2.IsOk + " / " + SelectedTest2.SendEnabled);
         }
     }
 }
