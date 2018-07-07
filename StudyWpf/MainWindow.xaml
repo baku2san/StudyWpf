@@ -43,7 +43,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
-                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="Checked" IsReadOnly="False"/>
+                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="Checked" IsReadOnly="False" IsThreeState="True"/>
                     <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
                 </DataGrid.Columns>
             </DataGrid>
