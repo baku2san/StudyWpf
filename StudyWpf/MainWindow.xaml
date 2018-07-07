@@ -9,15 +9,15 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Grid HorizontalAlignment="Left">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
+        <StackPanel Grid.Column="0" HorizontalAlignment="Left">
             <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest.Value}" SelectionMode="Single">
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest.Value}" SelectionMode="Single" HorizontalAlignment="Left">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
@@ -26,7 +26,7 @@
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBlock Text="{Binding Test2s.Count, Mode=OneWay}"></TextBlock>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="False" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single" >
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="False" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single" HorizontalAlignment="Left" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
@@ -39,7 +39,7 @@
         </StackPanel>
         <StackPanel Grid.Column="2">
             <TextBlock Text="{Binding Test3s.Count, Mode=OneWay}"></TextBlock>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test3s}" IsReadOnly="False" SelectedItem="{Binding SelectedTest3.Value}" SelectionMode="Single"  >
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test3s}" IsReadOnly="False" SelectedItem="{Binding SelectedTest3.Value}" SelectionMode="Single" HorizontalAlignment="Left"  >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
