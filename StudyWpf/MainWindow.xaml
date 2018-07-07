@@ -17,6 +17,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" HorizontalAlignment="Left">
             <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
+            <Button Content="Update" Command="{Binding TestCommand, Mode=OneWay}"></Button>
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest.Value}" SelectionMode="Single" HorizontalAlignment="Left">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>

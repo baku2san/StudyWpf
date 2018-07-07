@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace StudyWpf.ViewModels
 {
@@ -52,11 +54,17 @@ namespace StudyWpf.ViewModels
                 .ToReadOnlyReactiveCollection(to => new Test3ViewModel(to))
                 .AddTo(CompositeDisposable);
 
-            //this.TestCommand = this.ObserveProperty(o=>o.SelectedTest2.Value.Name)
-            //    .CombineLatest(x => x.All(y => !y))
-            //    .ToReactiveCommand();
-            //this.TestCommand.Subscribe(async _ => Console.WriteLine("OK"));
+            // IsOkの変化を、受け取れるようにしないと使いづらいね
+            this.TestCommand = this.SelectedTest
+                .CombineLatest(SelectedTest2, (test, test2)=> !string.IsNullOrEmpty(test?.Name) && test2?.IsOk == true)
+                .ToReactiveCommand();
+            this.TestCommand.Subscribe(async _ => UpdateData());
 
+        }
+        public async void UpdateData()
+        {
+            // 非同期化は、Model側ですべき？
+            Console.WriteLine(nameof(UpdateData));
         }
     }
 }
