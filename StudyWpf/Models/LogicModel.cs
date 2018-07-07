@@ -89,14 +89,14 @@ namespace StudyWpf.Models
                 }
             }
             SelectedTest3 = null;
-            Console.WriteLine(SelectedTest2.IsOk + " / " + SelectedTest2.SendEnabled);
-            Console.WriteLine(Test2s.Select(s => s.IsOk + " / " + s.SendEnabled).Aggregate((a, b) => a + ", " + b));
+            Console.WriteLine(SelectedTest2?.IsOk + " / " + SelectedTest2?.SendEnabled);
+            Console.WriteLine(Test2s.Select(s => s?.IsOk + " / " + s?.SendEnabled).Aggregate((a, b) => a + ", " + b));
         }
         private void Test3Selected(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(SelectedTest3) || !(sender is LogicModel)) { return; }
-            Console.WriteLine(SelectedTest3.IsOk + " / " + SelectedTest3.SendEnabled);
-            Console.WriteLine(Test3s.Select(s => s.IsOk + " / " + s.SendEnabled).Aggregate((a, b) => a + ", " + b));
+            Console.WriteLine(SelectedTest3?.IsOk + " / " + SelectedTest3?.SendEnabled);
+            Console.WriteLine(Test3s.Select(s => s?.IsOk + " / " + s?.SendEnabled).Aggregate((a, b) => a + ", " + b));
         }
     }
 }
