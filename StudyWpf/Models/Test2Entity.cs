@@ -12,6 +12,7 @@ namespace StudyWpf.Models
         public int TestModelId { get; set; }
         public string Name { get; set; }
         public bool IsOk { get; set; }
+
         [NotMapped]
         public bool SendEnabled { get; set; }
         public ResultStatus ResultStatus { get; set; }

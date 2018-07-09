@@ -17,7 +17,8 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" HorizontalAlignment="Left">
             <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
-            <Button Content="Update" Command="{Binding TestCommand, Mode=OneWay}"></Button>
+            <Button Content="Test2" Command="{Binding TestCommand, Mode=OneWay}"></Button>
+            <Button Content="Test3" Command="{Binding TestCommand2, Mode=OneWay}"></Button>
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest.Value}" SelectionMode="Single" HorizontalAlignment="Left">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
@@ -31,7 +32,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
-                    <DataGridCheckBoxColumn Binding="{Binding IsOk, UpdateSourceTrigger=PropertyChanged}" Header="Checked" IsReadOnly="False"/>
+                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="IsOk" IsReadOnly="False"/>
                     <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
                 </DataGrid.Columns>
             </DataGrid>
@@ -44,7 +45,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
-                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="Checked" IsReadOnly="False" IsThreeState="True"/>
+                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="IsOk" IsReadOnly="False" />
                     <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
                 </DataGrid.Columns>
             </DataGrid>

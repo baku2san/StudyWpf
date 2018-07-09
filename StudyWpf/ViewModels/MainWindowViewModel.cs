@@ -26,6 +26,9 @@ namespace StudyWpf.ViewModels
         public ReadOnlyReactiveCollection<Test3ViewModel> Test3s { get; set; }
 
         public ReactiveCommand TestCommand { get; }
+        public ReactiveCommand TestCommand2 { get; }
+        public ReactiveCommand TestCommand3 { get; }
+        public ReactiveProperty<bool> Command3Enabled { get; }
 
         public MainWindowViewModel()
         {
@@ -36,12 +39,18 @@ namespace StudyWpf.ViewModels
             SelectedTest2 = ReactiveProperty.FromObject(model, x => x.SelectedTest2, convert: x => Mapper.Map<Test2ViewModel>(x), convertBack: x => Mapper.Map<Test2Entity>(x))
                 .AddTo(CompositeDisposable);
 
-            SelectedTest3 = ReactiveProperty.FromObject(model, x => x.SelectedTest3, convert: x => Mapper.Map<Test3ViewModel>(x), convertBack: x => Mapper.Map<Test3Entity>(x))
+            SelectedTest3 = this.model
+                .ObserveProperty(o => o.SelectedTest3)
+                .Where(w => w != null)
+                .Select(s => new Test3ViewModel(s))
+                .ToReactiveProperty()
                 .AddTo(CompositeDisposable);
+            //SelectedTest3 = ReactiveProperty.FromObject(model, x => x.SelectedTest3, convert: x => Mapper.Map<Test3ViewModel>(x), convertBack: x => Mapper.Map<Test3Entity>(x))
+            //    .AddTo(CompositeDisposable);
 
             Tests = model
                 .Tests
-                .ToReadOnlyReactiveCollection(to=> Mapper.Map<TestViewModel>(to))
+                .ToReadOnlyReactiveCollection(to => Mapper.Map<TestViewModel>(to))
                 .AddTo(CompositeDisposable);
 
             Test2s = model
@@ -56,9 +65,16 @@ namespace StudyWpf.ViewModels
 
             // IsOkの変化を、受け取れるようにしないと使いづらいね
             this.TestCommand = this.SelectedTest
-                .CombineLatest(SelectedTest2, (test, test2)=> !string.IsNullOrEmpty(test?.Name) && test2?.IsOk == true)
+                .CombineLatest(SelectedTest2, (test, test2) => !string.IsNullOrEmpty(test?.Name) && test2?.IsOk.Value == true)
                 .ToReactiveCommand();
             this.TestCommand.Subscribe(async _ => UpdateData());
+
+            this.Test3s.ObserveElementObservableProperty(x => x.IsOk).Subscribe(_ => { RaisePropertyChanged("SelectedTest3"); Console.WriteLine("??" + this.SelectedTest3.Value?.IsOk.Value); });
+
+            this.TestCommand2 = this.SelectedTest2
+                .CombineLatest(SelectedTest3, (test2, test3) => !string.IsNullOrEmpty(test2?.Name.Value) && test3?.IsOk.Value == true)
+                .ToReactiveCommand();
+            this.TestCommand2.Subscribe(async _ => UpdateData());
 
         }
         public async void UpdateData()

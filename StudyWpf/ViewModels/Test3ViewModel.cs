@@ -2,7 +2,9 @@
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using StudyWpf.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Reactive.Linq;
 using static StudyWpf.Models.Constants;
 
 namespace StudyWpf.ViewModels
@@ -35,8 +37,10 @@ namespace StudyWpf.ViewModels
                 .ToReactivePropertyAsSynchronized(x => x.SendEnabled, ignoreValidationErrorValue: false)
                 .AddTo(CompositeDisposable);
             IsOk = test3
-                .ToReactivePropertyAsSynchronized(x => x.IsOk, ignoreValidationErrorValue: false)
+                .ToReactivePropertyAsSynchronized(x => x.IsOk, ignoreValidationErrorValue: true)
                 .AddTo(CompositeDisposable);
+
+            IsOk.Subscribe(x=> { Console.WriteLine("IsOk @ VM : " + x);  });
 
         }
     }

@@ -12,7 +12,7 @@ namespace StudyWpf.ViewModels
         public int TestModelId { get; set; }
         [Required]
         public ReactiveProperty<string> Name { get; set; }
-        public bool IsOk { get; set; }
+        public ReactiveProperty<bool> IsOk { get; set; }
         public ReactiveProperty<bool> SendEnabled { get; set; }
         public ResultStatus ResultStatus { get; set; }
     }

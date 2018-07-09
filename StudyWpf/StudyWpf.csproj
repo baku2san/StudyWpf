@@ -127,6 +127,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\FileOpenReactiveConverter.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\LogicModel.cs" />
     <Compile Include="Models\Test3Entity.cs" />

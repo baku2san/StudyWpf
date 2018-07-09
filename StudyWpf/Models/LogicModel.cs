@@ -95,8 +95,8 @@ namespace StudyWpf.Models
         private void Test3Selected(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(SelectedTest3) || !(sender is LogicModel)) { return; }
-            Console.WriteLine(SelectedTest3?.IsOk + " / " + SelectedTest3?.SendEnabled);
-            Console.WriteLine(Test3s.Select(s => s?.IsOk + " / " + s?.SendEnabled).Aggregate((a, b) => a + ", " + b));
+            Console.WriteLine("3: " + SelectedTest3?.IsOk + " / " + SelectedTest3?.SendEnabled);
+            Console.WriteLine("3: " + Test3s.Select(s => s?.IsOk + " / " + s?.SendEnabled).Aggregate((a, b) => a + ", " + b));
         }
     }
 }
