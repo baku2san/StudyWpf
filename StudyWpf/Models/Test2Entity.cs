@@ -5,13 +5,18 @@ using static StudyWpf.Models.Constants;
 
 namespace StudyWpf.Models
 {
-    public class Test2Entity: NotificationObject
+    public class Test2Entity: NotificationObjectExtend
     {
         [Key]   // EFcore だと複合キーは、OnModelingでLamdaで記述必要
         public int Id { get; set; }
         public int TestModelId { get; set; }
         public string Name { get; set; }
-        public bool IsOk { get; set; }
+        private bool _IsOk;
+        public bool IsOk
+        {
+            get { return _IsOk; }
+            set { this.SetProperty(ref _IsOk, value); }
+        }
 
         [NotMapped]
         public bool SendEnabled { get; set; }
