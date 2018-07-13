@@ -130,6 +130,7 @@
     <Compile Include="Helpers\FileOpenReactiveConverter.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\LogicModel.cs" />
+    <Compile Include="Models\NotificationObjectExtend.cs" />
     <Compile Include="Models\Test3Entity.cs" />
     <Compile Include="Models\TestRepository.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

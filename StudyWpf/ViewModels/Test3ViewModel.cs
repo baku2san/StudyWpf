@@ -14,7 +14,7 @@ namespace StudyWpf.ViewModels
         public int Id { get; set; }
         public int Test2Id { get; set; }
         [Required]
-        public ReactiveProperty<string> Name { get; set; }
+        public ReactiveProperty<string> Name { get; set; } = new ReactiveProperty<string>(" ");
         public ReactiveProperty<bool> IsOk { get; set; }
         public ReactiveProperty<bool> SendEnabled { get; set; }
         public ResultStatus ResultStatus { get; set; }
@@ -25,7 +25,8 @@ namespace StudyWpf.ViewModels
         public Test3ViewModel(Test3Entity test3)
         {
             Model = test3;
-
+            
+            if (test3 == null) { return; }
             Id = test3.Id;
             Test2Id = test3.Test2Id;
             Name = test3

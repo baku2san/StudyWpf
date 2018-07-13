@@ -7,11 +7,12 @@ using System.Reflection;
 using System.Text;
 using AutoMapper;
 using Livet;
+using Reactive.Bindings.Extensions;
 using StudyWpf.ViewModels;
 
 namespace StudyWpf.Models
 {
-    public class LogicModel: NotificationObject
+    public class LogicModel: NotificationObjectExtend
     {
         private TestRepository testRepository = new TestRepository();
 
@@ -54,6 +55,13 @@ namespace StudyWpf.Models
         }
         public ObservableCollection<Test3Entity> Test3s;
 
+        private string _SearchWordTxt = "";
+        public string SearchWordTxt
+        {
+            get { return _SearchWordTxt; }
+            set { SetProperty(ref _SearchWordTxt, value); }
+        }
+
         public LogicModel()
         {
 
@@ -65,6 +73,10 @@ namespace StudyWpf.Models
             PropertyChanged += Test2Selected;
             PropertyChanged += Test3Selected;
 
+
+            Test3s
+                .ObserveElementProperty(o => o.IsOk)
+                .Subscribe(_ => RaisePropertyChanged(nameof(Test3s)));
         }
 
         private void Test1Selected(object sender, PropertyChangedEventArgs e)
@@ -96,7 +108,6 @@ namespace StudyWpf.Models
         {
             if (e.PropertyName != nameof(SelectedTest3) || !(sender is LogicModel)) { return; }
             Console.WriteLine("3: " + SelectedTest3?.IsOk + " / " + SelectedTest3?.SendEnabled);
-            Console.WriteLine("3: " + Test3s.Select(s => s?.IsOk + " / " + s?.SendEnabled).Aggregate((a, b) => a + ", " + b));
         }
     }
 }

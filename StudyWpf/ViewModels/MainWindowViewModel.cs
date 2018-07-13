@@ -30,6 +30,9 @@ namespace StudyWpf.ViewModels
         public ReactiveCommand TestCommand3 { get; }
         public ReactiveProperty<bool> Command3Enabled { get; }
 
+        public ReactiveCommand SearchCommand { get; }
+        public ReactiveProperty<string> SearchWordTxt { get; }
+
         public MainWindowViewModel()
         {
             Console.WriteLine(nameof(MainWindowViewModel));
@@ -40,10 +43,7 @@ namespace StudyWpf.ViewModels
                 .AddTo(CompositeDisposable);
 
             SelectedTest3 = this.model
-                .ObserveProperty(o => o.SelectedTest3)
-                .Where(w => w != null)
-                .Select(s => new Test3ViewModel(s))
-                .ToReactiveProperty()
+                .ToReactivePropertyAsSynchronized(x=> x.SelectedTest3, convert: x=> new Test3ViewModel(x), convertBack: x=>Mapper.Map<Test3Entity>(x), ignoreValidationErrorValue: true)
                 .AddTo(CompositeDisposable);
             //SelectedTest3 = ReactiveProperty.FromObject(model, x => x.SelectedTest3, convert: x => Mapper.Map<Test3ViewModel>(x), convertBack: x => Mapper.Map<Test3Entity>(x))
             //    .AddTo(CompositeDisposable);
@@ -69,13 +69,23 @@ namespace StudyWpf.ViewModels
                 .ToReactiveCommand();
             this.TestCommand.Subscribe(async _ => UpdateData());
 
-            this.Test3s.ObserveElementObservableProperty(x => x.IsOk).Subscribe(_ => { RaisePropertyChanged("SelectedTest3"); Console.WriteLine("??" + this.SelectedTest3.Value?.IsOk.Value); });
+            this.model.Test3s.ObserveElementProperty(ox=>ox.IsOk)
+                .Subscribe(_=> { RaisePropertyChanged(nameof(SelectedTest3)); Console.WriteLine("__ model _ " + this.SelectedTest3.Value?.IsOk.Value); });
+            //this.Test3s.ObserveElementObservableProperty(x => x.IsOk).Subscribe(_ => { RaisePropertyChanged(nameof(Test3s)); Console.WriteLine("??" + this.SelectedTest3.Value?.IsOk.Value); });
+            //this.Test3s.ObserveElementProperty(x=>x.IsOk).Subscribe(_ => { RaisePropertyChanged(nameof(Test3s)); Console.WriteLine("?2" + this.SelectedTest3.Value?.IsOk.Value); });
 
-            this.TestCommand2 = this.SelectedTest2
-                .CombineLatest(SelectedTest3, (test2, test3) => !string.IsNullOrEmpty(test2?.Name.Value) && test3?.IsOk.Value == true)
-                .ToReactiveCommand();
+            this.TestCommand2 = this
+                .ObserveProperty(s=>s.SelectedTest3)
+                .Select(s=>s.Value?.IsOk?.Value == true)
+                .ToReactiveCommand(false)
+                .AddTo(CompositeDisposable);
             this.TestCommand2.Subscribe(async _ => UpdateData());
 
+            this.SearchWordTxt = ReactiveProperty.FromObject(model, x => x.SearchWordTxt, convert: x => x, convertBack: x => x)
+                .AddTo(CompositeDisposable);
+
+            this.SearchCommand = new ReactiveCommand();
+            this.SearchCommand.Subscribe(_ => Console.WriteLine(this.SearchWordTxt.Value + " is searching."));
         }
         public async void UpdateData()
         {

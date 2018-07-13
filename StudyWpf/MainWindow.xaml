@@ -9,48 +9,65 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Grid HorizontalAlignment="Left">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" HorizontalAlignment="Left">
-            <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
-            <Button Content="Test2" Command="{Binding TestCommand, Mode=OneWay}"></Button>
-            <Button Content="Test3" Command="{Binding TestCommand2, Mode=OneWay}"></Button>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest.Value}" SelectionMode="Single" HorizontalAlignment="Left">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
-        <StackPanel Grid.Column="1">
-            <TextBlock Text="{Binding Test2s.Count, Mode=OneWay}"></TextBlock>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="False" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single" HorizontalAlignment="Left" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
-                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="IsOk" IsReadOnly="False"/>
-                    <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <TextBox></TextBox>
-            <TextBlock></TextBlock>
-        </StackPanel>
-        <StackPanel Grid.Column="2">
-            <TextBlock Text="{Binding Test3s.Count, Mode=OneWay}"></TextBlock>
-            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test3s}" IsReadOnly="False" SelectedItem="{Binding SelectedTest3.Value}" SelectionMode="Single" HorizontalAlignment="Left"  >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
-                    <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
-                    <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="IsOk" IsReadOnly="False" />
-                    <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <TextBox></TextBox>
-            <TextBlock></TextBlock>
-        </StackPanel>
-    </Grid>
+    <TabControl>
+        <TabItem Name="collection">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="22"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" HorizontalAlignment="Left">
+                        <Label Content="{Binding SelectedTest.Value.ResultStatus}"/>
+                        <Button Content="Test2" Command="{Binding TestCommand, Mode=OneWay}"></Button>
+                        <Button Content="Test3" Command="{Binding TestCommand2, Mode=OneWay}"></Button>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Tests}" IsReadOnly="True" Grid.Column="0" SelectedItem="{Binding SelectedTest.Value}" SelectionMode="Single" HorizontalAlignment="Left">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="{Binding Test2s.Count, Mode=OneWay}"></TextBlock>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test2s}" IsReadOnly="False" Grid.Column="1" SelectedItem="{Binding SelectedTest2.Value}" SelectionMode="Single" HorizontalAlignment="Left" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                                <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
+                                <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="IsOk" IsReadOnly="False"/>
+                                <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox></TextBox>
+                        <TextBlock></TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="{Binding Test3s.Count, Mode=OneWay}"></TextBlock>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Test3s}" IsReadOnly="False" SelectedItem="{Binding SelectedTest3.Value}" SelectionMode="Single" HorizontalAlignment="Left"  >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Id}" Header="Id"/>
+                                <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
+                                <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="IsOk" IsReadOnly="False" />
+                                <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox></TextBox>
+                        <TextBlock></TextBlock>
+                    </StackPanel>
+                </Grid>
+                <StatusBar Grid.Row="1">
+                    <TextBox Width="80" x:Name="SearchWord" Text="{Binding SearchWordTxt.Value, Mode=TwoWay}" >
+                        <TextBox.InputBindings>
+                            <KeyBinding Gesture="Enter" Command="{Binding SearchCommand}" CommandParameter="{Binding ElementName=SearchWord, Path=Text}"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </StatusBar> 
+            </Grid>
+        </TabItem>
+    </TabControl>
 </Window>
