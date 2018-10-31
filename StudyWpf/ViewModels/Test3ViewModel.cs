@@ -13,13 +13,13 @@ namespace StudyWpf.ViewModels
     {
         public int Id { get; set; }
         public int Test2Id { get; set; }
-        [Required]
-        public ReactiveProperty<string> Name { get; set; } = new ReactiveProperty<string>(" ");
+        public ReactiveProperty<string> Name { get; set; }
         public ReactiveProperty<bool> IsOk { get; set; }
         public ReactiveProperty<bool> SendEnabled { get; set; }
         public ResultStatus ResultStatus { get; set; }
+        public ReactiveProperty<bool> IsSelected {get; set;}
 
-        private Test3Entity Model;
+        public Test3Entity Model;
         public Test3ViewModel()
         { }
         public Test3ViewModel(Test3Entity test3)
@@ -31,18 +31,20 @@ namespace StudyWpf.ViewModels
             Test2Id = test3.Test2Id;
             Name = test3
                 .ToReactivePropertyAsSynchronized(x => x.Name, ignoreValidationErrorValue: true)
-                .SetValidateAttribute(()=>this.Name)
                 .AddTo(CompositeDisposable);
 
             SendEnabled = test3
                 .ToReactivePropertyAsSynchronized(x => x.SendEnabled, ignoreValidationErrorValue: false)
                 .AddTo(CompositeDisposable);
             IsOk = test3
-                .ToReactivePropertyAsSynchronized(x => x.IsOk, ignoreValidationErrorValue: true)
+                .ToReactivePropertyAsSynchronized(x => x.IsOk, ignoreValidationErrorValue: false)
                 .AddTo(CompositeDisposable);
 
-            IsOk.Subscribe(x=> { Console.WriteLine("IsOk @ VM : " + x);  });
-
+            IsSelected = test3
+                .ToReactivePropertyAsSynchronized(o => o.IsSelected, convert: x => x, convertBack: x => x)
+                .AddTo(CompositeDisposable);
         }
     }
 }
+// 1. IsSelectedの集約
+// 1. 

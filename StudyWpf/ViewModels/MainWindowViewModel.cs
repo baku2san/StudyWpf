@@ -9,6 +9,7 @@ using System.Text;
 using AutoMapper;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace StudyWpf.ViewModels
 {
@@ -21,7 +22,6 @@ namespace StudyWpf.ViewModels
 
         public ReactiveProperty<Test2ViewModel> SelectedTest2 { get; set; }
         public ReadOnlyReactiveCollection<Test2ViewModel> Test2s { get; set; }
-
         public ReactiveProperty<Test3ViewModel> SelectedTest3 { get; set; }
         public ReadOnlyReactiveCollection<Test3ViewModel> Test3s { get; set; }
 
@@ -33,6 +33,10 @@ namespace StudyWpf.ViewModels
         public ReactiveCommand SearchCommand { get; }
         public ReactiveProperty<string> SearchWordTxt { get; }
 
+        public ReadOnlyReactiveCollection<bool> IsOk2s { get; set; }
+        public ReactiveProperty<int> IsOk3Count { get; set; }
+        public ReactiveProperty<SenderEventArgsPair<Test3Entity, PropertyChangedEventArgs>> WatchIsOk3 { get; }
+
         public MainWindowViewModel()
         {
             Console.WriteLine(nameof(MainWindowViewModel));
@@ -42,9 +46,6 @@ namespace StudyWpf.ViewModels
             SelectedTest2 = ReactiveProperty.FromObject(model, x => x.SelectedTest2, convert: x => Mapper.Map<Test2ViewModel>(x), convertBack: x => Mapper.Map<Test2Entity>(x))
                 .AddTo(CompositeDisposable);
 
-            SelectedTest3 = this.model
-                .ToReactivePropertyAsSynchronized(x=> x.SelectedTest3, convert: x=> new Test3ViewModel(x), convertBack: x=>Mapper.Map<Test3Entity>(x), ignoreValidationErrorValue: true)
-                .AddTo(CompositeDisposable);
             //SelectedTest3 = ReactiveProperty.FromObject(model, x => x.SelectedTest3, convert: x => Mapper.Map<Test3ViewModel>(x), convertBack: x => Mapper.Map<Test3Entity>(x))
             //    .AddTo(CompositeDisposable);
 
@@ -62,6 +63,30 @@ namespace StudyWpf.ViewModels
                 .Test3s
                 .ToReadOnlyReactiveCollection(to => new Test3ViewModel(to))
                 .AddTo(CompositeDisposable);
+            model.Test3s.ObserveAddChanged()
+                .Delay(TimeSpan.FromMilliseconds(500))
+                .Subscribe(_ =>
+            {
+
+                RaisePropertyChanged(nameof(SelectedTest3));
+            });
+            IsOk3Count = new ReactiveProperty<int>(0);
+            this.model.Test3s
+                .ObserveElementPropertyChanged()
+                .Where(w => w.EventArgs.PropertyName == nameof(Test3Entity.IsOk))
+                .Subscribe(_ => IsOk3Count.Value = Test3s.Where(w => w.IsOk.Value).Count());
+
+            SelectedTest3 = this.model
+                .ToReactivePropertyAsSynchronized(x => x.SelectedTest3, convert: x => {
+                    Console.WriteLine(x?.Id + " / " + Test3s.Aggregate("", (z,y)=> z + y.Id));
+                    return Test3s.FirstOrDefault(f => f.Id == x?.Id);
+                    }, 
+                    convertBack: x => x?.Model, ignoreValidationErrorValue: false )
+                .AddTo(CompositeDisposable);
+            //SelectedTest3
+            //    .Delay(TimeSpan.FromMilliseconds(500))
+            //    .Subscribe(_ => Console.WriteLine(_?.Id + " as selected@View " + Test3s?.Count));
+
 
             // IsOkの変化を、受け取れるようにしないと使いづらいね
             this.TestCommand = this.SelectedTest
@@ -69,8 +94,11 @@ namespace StudyWpf.ViewModels
                 .ToReactiveCommand();
             this.TestCommand.Subscribe(async _ => UpdateData());
 
-            this.model.Test3s.ObserveElementProperty(ox=>ox.IsOk)
-                .Subscribe(_=> { RaisePropertyChanged(nameof(SelectedTest3)); Console.WriteLine("__ model _ " + this.SelectedTest3.Value?.IsOk.Value); });
+            //this.model.Test3s.ObserveResetChanged()
+            //    .Subscribe(_=>
+            //    {
+            //        Console.WriteLine( this.SelectedTest3.Value?.Id + " as Id@View");
+            //    });
             //this.Test3s.ObserveElementObservableProperty(x => x.IsOk).Subscribe(_ => { RaisePropertyChanged(nameof(Test3s)); Console.WriteLine("??" + this.SelectedTest3.Value?.IsOk.Value); });
             //this.Test3s.ObserveElementProperty(x=>x.IsOk).Subscribe(_ => { RaisePropertyChanged(nameof(Test3s)); Console.WriteLine("?2" + this.SelectedTest3.Value?.IsOk.Value); });
 

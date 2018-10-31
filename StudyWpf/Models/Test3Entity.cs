@@ -11,8 +11,11 @@ namespace StudyWpf.Models
         [Key]   // EFcore だと複合キーは、OnModelingでLamdaで記述必要
         public int Id { get; set; }
         public int Test2Id { get; set; }
-        public string Name { get; set; }
+        [Required]
+        public string Name { get; set; } = "def";
         private bool _IsOk;
+        private bool _IsSelected;
+
         public bool IsOk
         {
             get { return _IsOk; }
@@ -20,8 +23,21 @@ namespace StudyWpf.Models
             {
                 if (_IsOk == value) return;
                 _IsOk = value;
-                Console.WriteLine("IsOk changed : " + IsOk);
                 RaisePropertyChanged(nameof(IsOk));
+            }
+        }
+        public bool IsSelected
+        {
+            get { return _IsSelected; }
+            set
+            {
+                if (_IsSelected == value)
+                {
+                    return;
+                }
+                _IsSelected = value;
+
+                RaisePropertyChanged(nameof(IsSelected));
             }
         }
         [NotMapped]

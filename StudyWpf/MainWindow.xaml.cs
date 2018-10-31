@@ -50,6 +50,7 @@ namespace StudyWpf
                 cfg.CreateMap<Test3Entity, Test3ViewModel>()
                     .ForPath(dest => dest.Name.Value, source => source.MapFrom(s => s.Name))
                     .ForPath(dest => dest.SendEnabled.Value, source => source.MapFrom(s => s.SendEnabled))
+                    .ForMember(dest => dest.Model, opt => opt.Ignore())
                     .ForMember(dest => dest.CompositeDisposable, opt => opt.Ignore())
                     .ForMember(dest => dest.Messenger, opt => opt.Ignore())
                     .ReverseMap()

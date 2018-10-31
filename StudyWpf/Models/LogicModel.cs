@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using AutoMapper;
 using Livet;
 using Reactive.Bindings.Extensions;
@@ -100,14 +101,13 @@ namespace StudyWpf.Models
                     Test3s.Add(test3);
                 }
             }
-            SelectedTest3 = null;
-            Console.WriteLine(SelectedTest2?.IsOk + " / " + SelectedTest2?.SendEnabled);
-            Console.WriteLine(Test2s.Select(s => s?.IsOk + " / " + s?.SendEnabled).Aggregate((a, b) => a + ", " + b));
+            Thread.Sleep(300);
+            SelectedTest3 = Test3s.FirstOrDefault();
+            Console.WriteLine(SelectedTest3?.Id + " selected @ M");
         }
         private void Test3Selected(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != nameof(SelectedTest3) || !(sender is LogicModel)) { return; }
-            Console.WriteLine("3: " + SelectedTest3?.IsOk + " / " + SelectedTest3?.SendEnabled);
         }
     }
 }

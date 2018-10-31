@@ -8,8 +8,12 @@ namespace StudyWpf.ViewModels
     {
         public int Id { get; set; }
         public string Name { get;  set; }
-
         public ResultStatus ResultStatus { get; set; }
+
+        public TestViewModel()
+        {
+            
+        }
 
     }
 }
