@@ -41,6 +41,13 @@
                                 <DataGridTextColumn Binding="{Binding Name.Value}" Header="Name"/>
                                 <DataGridCheckBoxColumn Binding="{Binding IsOk.Value, UpdateSourceTrigger=PropertyChanged}" Header="IsOk" IsReadOnly="False"/>
                                 <DataGridCheckBoxColumn Binding="{Binding SendEnabled.Value, UpdateSourceTrigger=PropertyChanged}" Header="Enabled" IsReadOnly="False"/>
+                                <DataGridTemplateColumn Header="Action">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Act" Command="{Binding Path=DataContext.ActionCommand,  RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Mode=OneWay }" Tag="{Binding}" IsEnabled="{Binding Actionable}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                         <TextBox></TextBox>

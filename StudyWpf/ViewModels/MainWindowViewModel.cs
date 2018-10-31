@@ -30,6 +30,8 @@ namespace StudyWpf.ViewModels
         public ReactiveCommand TestCommand3 { get; }
         public ReactiveProperty<bool> Command3Enabled { get; }
 
+        public ReactiveCommand ActionCommand { get; }
+
         public ReactiveCommand SearchCommand { get; }
         public ReactiveProperty<string> SearchWordTxt { get; }
 
@@ -108,6 +110,10 @@ namespace StudyWpf.ViewModels
                 .ToReactiveCommand(false)
                 .AddTo(CompositeDisposable);
             this.TestCommand2.Subscribe(async _ => UpdateData());
+
+            this.ActionCommand = new ReactiveCommand().AddTo(CompositeDisposable);
+            this.ActionCommand
+                .Subscribe(_ => Console.WriteLine($"{_} __"));
 
             this.SearchWordTxt = ReactiveProperty.FromObject(model, x => x.SearchWordTxt, convert: x => x, convertBack: x => x)
                 .AddTo(CompositeDisposable);
